@@ -1,0 +1,104 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	font-family: Arimo;
+}
+
+header {
+	background-color: #009688;
+	color: white;
+	text-align: center;
+	box-shadow: 0 3px 10px 1px #888;
+	position: relative;
+}
+
+header .heading {
+	width: 960px;
+	min-height: 200px;
+	text-align: left;
+	margin: 0 auto;
+}
+
+header h1 {
+	position: absolute;
+	bottom: 30px;
+	margin-top: 0;
+	font-weight: bold;
+	transition: background-color 0.5s linear;
+}
+
+header .links {
+	width: 100%;
+	background-color: #00796B;
+}
+
+header .links a {
+	color: white;
+}
+header .links .link-item {
+	display: inline-block;
+	min-width: 150px;
+	height: 40px;
+	line-height: 40px;
+	font-weight: bold;
+}
+
+header .links .link-item:hover {
+	background-color: #00695C;
+}
+
+.content {
+	width: 960px;
+	min-height: 40px;
+	margin: 40px auto;
+}
+
+.single-link {
+	min-height: 50px;
+	margin-bottom: 20px;
+}
+
+.single-link .post-heading .post-url {
+	font-weight: normal;
+	padding-left: 20px;
+	text-align: right;
+}
+
+.single-link .post-heading {
+	display: block;
+	font-size: 18pt;
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+}
+
+.single-link .post-timestamp {
+	font-weight: normal;
+	font-size: 8px;
+}
+
+.tag {
+	height: 20px;
+	text-align: center;
+	min-width: 80px;
+	border: 1px solid #ccc;
+	display: inline-block;
+	border-radius: 2px;
+}
+
+.form-group {
+	padding-bottom: 30px;
+}
+
+.form-group label {
+	display: block;
+	font-weight: bold;
+}
+
+.form-group input, .form-group textarea {
+	width: 100%;
+}
+
+.form-group textarea {
+	min-height: 100px;
+}

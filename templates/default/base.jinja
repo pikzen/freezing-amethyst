@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head %}
+	<title>{% block title %}{% endblock %} -- {{app.name}}</title>
+	<link rel="stylesheet" href="{{url_for('static', filename=app.theme + 'css/' + app.base_stylesheet)}}">
+	<meta charset="utf-8">
+	{% endblock %}
+</head>
+<body>
+	<header>
+		{% block before_header %}
+		{% endblock %}
+		<div class="links">
+			<a href="{{ url_for("index") }}"><div class="link-item">Home</div></a>
+			<a href="{{ url_for("post") }}"><div class="link-item">Add link</div></a>
+		</div>
+		<div class="heading">
+			<h1>{% block pagetitle %}{% endblock %}Dropping them links in here</h1>
+		</div>
+		{% block after_header %}
+		{% endblock %}
+	</header>
+	<div class="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+	<footer>
+		{% block footer %}
+		{% endblock %}
+		This software is free software redistributed under the MIT License. <a href="{{app.source_page}}">Get the source!</a>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% macro single_link(link) %}
+<div class="single-link">
+	<div class="post-controls">
+		<a href="{{ url_for('.delete_link', id=link.id )}}">D</a>
+	</div>
+	<div class="post-content">
+		<a class="post-heading" href="{{link.url}}">{{link.title}}<span class="post-url">{{link.url}}</span></span></a>
+		<span class="post-timestamp">Posted on {{link.posted_on}}</span>
+		<div class="post-description">
+			{{link.description}}
+		</div>
+		<div class="post-tags">
+			{% for tag in link.tags %}
+				<div class="tag">{{tag}}</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endmacro %}

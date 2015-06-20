@@ -1,0 +1,13 @@
+{% extends "default/base.jinja" %}
+
+{% block title %}Installing{% endblock %}
+{% block pagetitle %}Installing - {% endblock %}
+{% block content %}
+	{% if success %}
+		<h2>It werked</h2>
+	{% endif %}
+	<form action="install" method="POST">
+		<label>Pls don't click</label>
+		<input type="submit">
+	</form>
+{% endblock %}

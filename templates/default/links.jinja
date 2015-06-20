@@ -1,0 +1,11 @@
+{% extends "default/base.jinja" %}
+
+{% block title %}Links{% endblock %}
+{% block pagetitle %}Links - {% endblock %}
+
+{% block content %}
+{% import 'default/single_link.jinja' as single_link %}
+{% for link in links %}
+	{{ single_link.single_link(link) }}
+{% endfor %}
+{% endblock %}

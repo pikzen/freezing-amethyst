@@ -1,0 +1,22 @@
+{% extends "default/base.jinja" %}
+
+{% block title %}Deleting {{link.title}} - {% endblock %}
+{% block pagetitle %}Deleting {{link.title}} - {% endblock %}
+
+{% block content %}
+	<div class="single-link">
+		<div class="post-content">
+			<a class="post-heading" href="{{link.url}}">{{link.title}}<span class="post-url">{{link.url}}</span></span></a>
+			<span class="post-timestamp">Posted on {{link.posted_on}}</span>
+			<div class="post-description">
+				{{link.description}}
+			</div>
+			<div class="post-tags">
+				{% set taglist = link.tags.split(',')%}
+				{% for tag in taglist %}
+					<div class="tag">{{tag}}</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
