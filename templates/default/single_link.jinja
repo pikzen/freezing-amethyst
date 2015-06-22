@@ -11,7 +11,7 @@
 		</div>
 		<div class="post-tags">
 			{% for tag in link.tags %}
-				<div class="tag">{{tag}}</div>
+				<a href="{{tag.id}}"><div class="tag">{{tag.text}}</div></a>
 			{% endfor %}
 		</div>
 	</div>
