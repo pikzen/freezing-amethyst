@@ -66,28 +66,43 @@ def teardown_request(exception):
 def post_link():
 	'''
 	Performed when a link is POSTed.
-	Inserts the (sanitized) data into the database. The description is parsed as Markdown.
+	Inserts the (sanitized) data into the database. The description is parsed as Markdown
+	and saved in HTML, while allowing a few attributes
+	------------------
+	NOTE: `request` is global and is implicitly passed as a parameter. It would probably
+	be better to pass the data as a param for testing purposes.
+	------------------
+	NOTE: Maybe save the raw data as Markdown and only render it once needed ? Makes editing 
+	posts easier, but puts more load on the server.
 	'''
-	# TODO: Handle the parsing of unexpected inputs (plugins ?)
 	allowed_tags = ("p", "h1", "h2", "h3", "h4", "h5", "h6", "b", "em", "small", "code", "i", "pre", "strong", "table", 'thead', 'tbody', 'th', 'tr', 'td', 'ul', 'ol', 'li', 'input')
 	allowed_attrs = ('type', 'disabled', 'checked')
 
 	title = bleach.clean(request.form['title'])
-	desc  = bleach.clean(markdown.markdown(request.form['desc'], ['markdown.extensions.tables', 'markdown.extensions.fenced_code', 'markdown.extensions.nl2br', 'markdown_checklist.extension']), tags=allowed_tags, attributes=allowed_attrs)
+	desc  = bleach.clean(request.form['desc'], tags=allowed_tags, attributes=allowed_attrs)
 	url   = bleach.clean(request.form["url"])
 	timestamp  = time.time()
 	tags = []
 
 	post = Link(title, url, desc, timestamp)
-	for val in request.form["tags"].split(" "):
-		post.add_tag(0, bleach.clean(val))
+	post.set_tags(bleach.clean(request.form['tags']))
 
 	post.write()
 	return redirect("/")
 
 @app.route('/')
-def index():
-	links = Link.get_posts(0, 20)
+@app.route('/links/<int:start>')
+def index(start=None):
+	'''
+	ROUTE : localhost/
+	Displays an unfiltered list of links, ranging from `start` (0 if not set) to `Config.max_links_per_page`.
+	--------------------
+	Parameters:
+		- `start`: Amount of links to skip (i.e. ignore the `start`ieth first posts)
+	'''
+	start = 0 if start is None else start
+
+	links = Link.get_posts(start, 20)
 	return render_template(Config.theme + "links.jinja", app=Config, links=links)
 
 @app.route('/install', methods=['GET', 'POST'])
@@ -111,7 +126,7 @@ def post():
 			flash(err)
 	return render_template(Config.theme + "post.jinja", app=Config, form=form)
 
-@app.route("/delete_link/<id>", methods=["GET","POST"])
+@app.route("/delete_link/<int:id>", methods=["GET","POST"])
 def delete_link(id):
 	if request.method == "GET":
 		return render_template(Config.theme + "delete.jinja", app=Config, link=Link.from_id(id))
