@@ -12,6 +12,7 @@ from contextlib import closing
 from link import Link
 import forms
 import sqlite3, os, time, markdown, bleach
+import gettext
 
 app = Flask(__name__) # THAT is me being retarded.
 
@@ -20,7 +21,18 @@ Config = DotAccessDict();
 Config.name = "Pyyli - Default Name"
 Config.theme = "default/"
 Config.base_stylesheet = "style.css"
-Config.source_page = "http://feula.me/pyyli";
+Config.source_page = "http://feula.me/pyyli"
+Config.lang = "en-EN"
+
+def setup_i18n():
+	'''
+	Configures gettext to use the appropriate domain & path, then
+	registers `translate` and `i18n` as filters for Jinja
+	'''
+	gettext.bindtextdomain('amethyst', 'lang/')
+	gettext.textdomain('amethyst')
+	app.jinja_env.filters['translate'] = gettext.gettext
+	app.jinja_env.filters['i18n']      = gettext.gettext
 
 def connect_db():
 	'''
