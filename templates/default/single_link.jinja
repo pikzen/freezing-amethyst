@@ -1,8 +1,11 @@
-{% macro single_link(link) %}
+{% macro single_link(link, has_controls=True) %}
 <div class="single-link">
+	{% if has_controls %}
 	<div class="post-controls">
 		<a href="{{ url_for('.delete_link', id=link.id )}}">D</a>
+		<a href="{{ url_for('.edit_link', id=link.id )}}">E</a>
 	</div>
+	{% endif %}
 	<div class="post-content">
 		<a class="post-heading" href="{{link.url}}">{{link.title}}<span class="post-url">{{link.url}}</span></span></a>
 		<span class="post-timestamp">Posted on {{link.posted_on}}</span>

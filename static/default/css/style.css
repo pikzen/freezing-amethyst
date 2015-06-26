@@ -5,7 +5,7 @@ body, html {
 }
 
 header {
-	background-color: #009688;
+	background-color: #7E57C2;
 	color: white;
 	text-align: center;
 	box-shadow: 0 3px 10px 1px #888;
@@ -29,7 +29,7 @@ header h1 {
 
 header .links {
 	width: 100%;
-	background-color: #00796B;
+	background-color: #673AB7;
 }
 
 header .links a {
@@ -44,7 +44,7 @@ header .links .link-item {
 }
 
 header .links .link-item:hover {
-	background-color: #00695C;
+	background-color: #5A35B1;
 }
 
 .content {
@@ -56,6 +56,7 @@ header .links .link-item:hover {
 .single-link {
 	min-height: 50px;
 	margin-bottom: 20px;
+	position: relative;
 }
 
 .single-link .post-heading .post-url {
@@ -101,4 +102,28 @@ header .links .link-item:hover {
 
 .form-group textarea {
 	min-height: 100px;
+}
+
+.sadface {
+	font-size: 72pt;
+	color: #888;
+	text-align: center;
+	display: block;
+}
+
+.post-controls {
+	display: inline-block;
+	width: 30px;
+	vertical-align: top;
+}
+
+.post-controls a {
+	display: block;
+	text-align: center;
+}
+
+.post-content {
+	display: inline-block;
+	width: auto;
+	vertical-align: top;
 }

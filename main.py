@@ -6,7 +6,7 @@ sys.path.append("utils")
 sys.path.append("src/forms")
 sys.path.append("src/models")
 
-from flask import Flask, render_template, request, url_for, g, redirect, flash
+from flask import Flask, render_template, request, url_for, g, redirect, flash, make_response
 from dotaccessdict import DotAccessDict
 from contextlib import closing
 from link import Link
@@ -128,11 +128,43 @@ def post():
 
 @app.route("/delete_link/<int:id>", methods=["GET","POST"])
 def delete_link(id):
+	form = forms.DeleteLinkForm()
+	link = Link.from_id(id)
+	if link is None:
+		return redirect('/404')
+
 	if request.method == "GET":
-		return render_template(Config.theme + "delete.jinja", app=Config, link=Link.from_id(id))
+		return render_template(Config.theme + "delete.jinja", app=Config, link=link, form=form)
 	else:
 		Link.delete_from_id(id)
 		return redirect("/")
+
+@app.route("/edit_link/<int:id>", methods=["GET", "POST"])
+def edit_link(id):
+	form = forms.SubmitLinkForm()
+	link = Link.from_id(id, format=False)
+	if link is None:
+		return redirect('/404')
+
+	if form.validate_on_submit():
+		pass
+
+	for field, error in form.errors.iteritems():
+		for err in error:
+			flash(err)
+
+	taglist = []
+	for tag in link.tags:
+		taglist.append(tag.text)
+
+	link.tags_as_string = ','.join(taglist)
+
+	return render_template(Config.theme + "edit.jinja", app=Config, link=link, form=form)
+
+@app.route("/404", methods=["GET"])
+def error_404():
+	response = (render_template(Config.theme + "404.jinja", app=Config), 404, ())
+	return make_response(response)
 
 #       ## ##
 ###     ## ##

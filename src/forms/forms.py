@@ -8,3 +8,6 @@ class SubmitLinkForm(Form):
 	desc  = TextAreaField('Description',  validators=[Optional()])
 	tags  = StringField('Tags',  validators=[Optional()])
 	target = "post"
+
+class DeleteLinkForm(Form):
+	pass

@@ -3,20 +3,15 @@
 {% block title %}Deleting {{link.title}} - {% endblock %}
 {% block pagetitle %}Deleting {{link.title}} - {% endblock %}
 
+{% import 'default/single_link.jinja' as single_link %}
 {% block content %}
-	<div class="single-link">
-		<div class="post-content">
-			<a class="post-heading" href="{{link.url}}">{{link.title}}<span class="post-url">{{link.url}}</span></span></a>
-			<span class="post-timestamp">Posted on {{link.posted_on}}</span>
-			<div class="post-description">
-				{{link.description}}
-			</div>
-			<div class="post-tags">
-				{% set taglist = link.tags.split(',')%}
-				{% for tag in taglist %}
-					<div class="tag">{{tag}}</div>
-				{% endfor %}
-			</div>
-		</div>
+	{{ single_link.single_link(link, false) }}
+	<p>Are you sure you want to delete this link ?</p>
+	<div class="action-buttons">
+		<form action="" method="POST">
+			{{ form.hidden_tag() }}
+			<button class="button button-positive" value="confirm_delete">Yes, I'm sure</button>
+			<button class="button" value="cancel_delete">Nope, take me back</button>
+		</form>
 	</div>
 {% endblock %}
